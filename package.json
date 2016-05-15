@@ -1,0 +1,24 @@
+{
+  "name": "flak-cannon",
+  "version": "1.0.0",
+  "description": "spray your logs at whatever APIs will accept them",
+  "main": "index.js",
+  "scripts": {
+    "test": "sorry no"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kmoe/flak-cannon.git"
+  },
+  "author": "Katy Moe <katy@katy.moe> (http://katy.moe)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kmoe/flak-cannon/issues"
+  },
+  "homepage": "https://github.com/kmoe/flak-cannon#readme",
+  "dependencies": {
+    "lodash": "^4.12.0",
+    "request": "^2.72.0",
+    "twitter": "^1.3.0"
+  }
+}
