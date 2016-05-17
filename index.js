@@ -1,6 +1,7 @@
 const fp = require('lodash/fp');
 const request = require('request');
 const Twitter = require('twitter');
+const TwilioClient = require('twilio');
 
 // capabilities
 const defaults = {
@@ -15,7 +16,7 @@ const defaults = {
     access_token_key: null,
     access_token_secret: null,
   },
-  telegram: {
+  telegram: { // DOESN'T WORK LOL
     enabled: false,
     token: null,
   },
@@ -23,7 +24,8 @@ const defaults = {
     enabled: false,
     outbound_number: null,
     inbound_number: null,
-    api_key: null,
+    account_sid: null,
+    auth_token: null,
   }
 };
 
@@ -57,7 +59,7 @@ FlakCannon.prototype.spray = function(options, message) {
       body: {
         text: message
       }
-    })
+    });
   }
 
   if (this.options.twitter.enabled) {
@@ -81,10 +83,25 @@ FlakCannon.prototype.spray = function(options, message) {
   
   if (this.options.twilio.enabled) {
     const twilioOptions = this.options.twilio;
-    
-    console.log('not implemented yet');
+
+    const twilioClient = TwilioClient(twilioOptions.account_sid, twilioOptions.auth_token);
+
+    twilioClient.messages.create({
+      to: twilioOptions.inbound_number,
+      from: twilioOptions.outbound_number,
+      body: message,
+    }, (error, msg) => {
+      if (error) {
+        console.error({
+          error: error
+        });
+      }
+      console.log('Twilio message sent: ' + msg.sid);
+    });
   }
+
   
+
   console.log('SPRAY');
 };
 
